@@ -1,12 +1,14 @@
 name: nginx
-version: 0.1
+version: 0.2
 summary: small, powerful, scalable web/proxy server
 description: Nginx ("engine X") is a high-performance web and reverse proxy server created by Igor Sysoev. It can be used both as a standalone web server and as a proxy to reduce the load on back-end HTTP or mail servers.
 confinement: strict
+grade: stable
+base: core22
 
 apps:
   nginx:
-    plugs: [network-bind]
+    plugs: network-bind
     command: bin/nginx.sh
     
 parts:
@@ -19,7 +21,6 @@ parts:
     prepare: |
         cp auto/configure .
     configflags: 
-        - --without-http_rewrite_module
         - --without-http_gzip_module
         - --error-log-path=logs/error.log
         - --http-log-path=logs/nginx.log
@@ -28,7 +29,7 @@ parts:
         - libgd3
         - libgeoip1
         - libpcre3
-        - libssl1.0.0
+        - libssl3
         - libxml2
         - libxslt1.1
         - zlib1g
